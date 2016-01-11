@@ -94,8 +94,9 @@ span.hljs-tag, span.hljs-symbol{
       <li>item_Quantity - bad</li>
       </ul>
     <p>
-      You can set a default value for a field <code>field code: Int = 0</code>. 
-      In this case you can avoid declaration of the data type and it will be infered automatically: <code>field code = 0</code>
+      You can set a default value for a field: <code>field name: String = &quot;Default Name&quot;</code>. 
+      If you have a default value, you can omit the data type declaration: <code>field name = &quot;Default Name&quot;</code>.
+      This field will be considered <code>String</code> automatically because <code>&quot;Default Name&quot;</code> is <code>String</code>.
       </p>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="ComputeFields" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Compute Fields<a class=" scalatex-site-Styles-headerLink" href="#ComputeFields" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p>
@@ -127,7 +128,23 @@ span.hljs-tag, span.hljs-symbol{
         </p>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="ReferenceFields" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Reference Fields<a class=" scalatex-site-Styles-headerLink" href="#ReferenceFields" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p>
-      Reference Fields
+      A reference field contains reference to another or the same entity. 
+      To do this, you can easily use the name of the entity as data type after colon:
+  </p>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Invoice {
+  field company: Company
+}
+
+entity Company {
+  field name: String
+  
+  func toString = name
+}
+</code></pre>
+    <p>
+      You can make references to any entities but you have to define a string representation for the entity 
+      because the reference field will use the string representation to show the reference to user.
+      To do this, you need to declare <code>toString</code> function and define an expression how to convert the entity to string.
   </p>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="CollectionFields" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Collection Fields<a class=" scalatex-site-Styles-headerLink" href="#CollectionFields" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p>
@@ -138,9 +155,25 @@ span.hljs-tag, span.hljs-symbol{
       Functions
   </p>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="DataTypes" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Data Types<a class=" scalatex-site-Styles-headerLink" href="#DataTypes" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
-    <p>
-      Data Types
-  </p>
+    <dl>
+      <dt>
+        <code>Dec[precision]</code></dt>
+      <dd>
+        Decimal datatype. You have to set precision in square brackets. 
+        The expression can be a constant like <code>field foo: Dec[2]</code> or an expression <code>field foo: Dec[currency.precision]</code>.</dd>
+      <dt></dt> 
+        <code>Int</code>
+      <dd>
+        Integer datatype. It is similar to <code>Dec[0]</code>.</dd>
+      <dt>
+        <code>String</code></dt>
+      <dd>
+        String datatype.</dd>
+      <dt>
+        <code>Date</code>, <code>Time</code> and <code>DateTime</code></dt>
+      <dd>
+        Three datatypes for date, time and date&amp;time together 
+  </dd></dl>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="FieldModifiers" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Field Modifiers<a class=" scalatex-site-Styles-headerLink" href="#FieldModifiers" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p>
       Field Modifiers
@@ -170,4 +203,4 @@ Field ::= field &lt;Name&gt;: [&lt;DataType&gt;] [= &lt;DefaultValue&gt;] [{ &lt
         );
       })
     })
-  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
