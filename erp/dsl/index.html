@@ -70,14 +70,14 @@ span.hljs-tag, span.hljs-symbol{
   </p>
   <p>
     It is convesional to start an entity name for a capital letter and user a singular form of the word. 
-    To user several words, use <b>upper</b> <a href="https://en.wikipedia.org/wiki/CamelCase">CamelCase</a>:
-    <ul>
-      <li></li> Company - good
-      <li></li> InvoiceItem - good
-      <li></li> company - bad
-      <li></li> Companies - bad
-      <li></li> Invoice_Item - bad
-    </ul></p>
+    To user several words, use <b>upper</b> <a href="https://en.wikipedia.org/wiki/CamelCase">CamelCase</a>:</p>
+  <ul>
+    <li>Company - good</li>
+    <li>InvoiceItem - good</li>
+    <li>company - bad</li>
+    <li>Companies - bad</li>
+    <li>Invoice_Item - bad</li>
+    </ul>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Fields" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Fields<a class=" scalatex-site-Styles-headerLink" href="#Fields" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
   field code: Int
@@ -85,17 +85,46 @@ span.hljs-tag, span.hljs-symbol{
 }</code></pre>
     <p>
       Two fields are declared here: code and name. The code is integer and name is string. 
-      Convensionally, <b>lower</b> <a href="https://en.wikipedia.org/wiki/CamelCase">CamelCase</a> is used for field names:
-      <ul>
-        <li></li> name - good
-        <li></li> itemQuantity - good
-        <li></li> Name - bad
-        <li></li> Companies - bad
-        <li></li> item_Quantity - bad
-      </ul></p>
+      Convensionally, <b>lower</b> <a href="https://en.wikipedia.org/wiki/CamelCase">CamelCase</a> is used for field names:</p>
+    <ul>
+      <li>name - good</li>
+      <li>itemQuantity - good</li>
+      <li>Name - bad</li>
+      <li>Companies - bad</li>
+      <li>item_Quantity - bad</li>
+      </ul>
+    <p>
+      You can set a default value for a field <code>field code: Int = 0</code>. 
+      In this case you can avoid declaration of the data type and it will be infered automatically: <code>field code = 0</code>
+      </p>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="ComputeFields" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Compute Fields<a class=" scalatex-site-Styles-headerLink" href="#ComputeFields" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p>
-      Compute Fields</p>
+      Compute fields are not stored in the database but they are visible to the user. 
+      To declare a compute property, use the <code>compute</code> keyword instead of <code>field</code> and set an expression for calculation.
+      </p>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Invoice {
+  field qty: Dec[2]
+  compute price: Dec[2] = total/qty
+  field total: Dec[2]
+}
+</code></pre>
+    <p>
+      Here we declare the compute field <code>price</code>. 
+      You can simplify the declaration and omit the datatype. It will be infered automatically: <code>field price = total/qty</code>.
+      </p>
+    <p>
+      This compute field will be read only. If you want to make it editable, yuo have to use the <code>update</code> modifier:
+    </p>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">compute price = total/qty {
+  update {
+    total = qty*price
+  }
+}
+</code></pre>
+    <p>
+      This means that when the <code>price</code> field is changed, we will update <code>total</code> with <code>qty*price</code>.
+       
+        </p>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="ReferenceFields" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Reference Fields<a class=" scalatex-site-Styles-headerLink" href="#ReferenceFields" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p>
       Reference Fields
@@ -141,4 +170,4 @@ Field ::= field &lt;Name&gt;: [&lt;DataType&gt;] [= &lt;DefaultValue&gt;] [{ &lt
         );
       })
     })
-  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
