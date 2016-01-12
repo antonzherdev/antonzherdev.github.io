@@ -146,9 +146,31 @@ entity Company {
       because the reference field will use the string representation to show the reference to user.
       To do this, you need to declare <code>toString</code> function and define an expression how to convert the entity to string.
   </p>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="OptionalFields" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Optional Fields<a class=" scalatex-site-Styles-headerLink" href="#OptionalFields" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <p>
+      Optional Fields
+  </p>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="CollectionFields" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Collection Fields<a class=" scalatex-site-Styles-headerLink" href="#CollectionFields" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p>
-      Collection Fields
+      Collection fields allow to add many items of similar type into an entity.
+      </p>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Invoice {
+  field items: [InvoiceItem]
+}
+
+class InvoiceItem {
+  field product: Product
+  field qty: Dec[2]
+}
+</code></pre>
+    <p>
+      InvoiceItem is a <code>class</code>. This means that it can be stored in the database only as a part of another entity.
+      It does not have an id and cannot be selected itself, but only with another entity which will use it.
+      </p>
+    <p>
+      <code>items</code> is a collection field because the datatype declared in square brackets <code>items</code>.
+      This means that there are many items. 
+      This field won't be visible in list view, and will be represented as a table in form by default.
   </p>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Functions" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Functions<a class=" scalatex-site-Styles-headerLink" href="#Functions" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p>
@@ -193,7 +215,7 @@ Field ::= field &lt;Name&gt;: [&lt;DataType&gt;] [= &lt;DefaultValue&gt;] [{ &lt
 </p>
   </div></div><script>
     scalatex.scrollspy.Controller().main(
-      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Data Types","children":[]},{"value":"Field Modifiers","children":[]},{"value":"Syntax","children":[]}]},{"value":"View","children":[]}]
+      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[]},{"value":"Optional Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Data Types","children":[]},{"value":"Field Modifiers","children":[]},{"value":"Syntax","children":[]}]},{"value":"View","children":[]}]
   )</script><script>
     ['DOMContentLoaded', 'load'].forEach(function(ev){
       addEventListener(ev, function(){
@@ -203,4 +225,4 @@ Field ::= field &lt;Name&gt;: [&lt;DataType&gt;] [= &lt;DefaultValue&gt;] [{ &lt
         );
       })
     })
-  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
