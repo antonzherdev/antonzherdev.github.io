@@ -197,8 +197,24 @@ class InvoiceItem {
         Three datatypes for date, time and date&amp;time together 
   </dd></dl>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="FieldModifiers" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Field Modifiers<a class=" scalatex-site-Styles-headerLink" href="#FieldModifiers" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
-    <p>
-      Field Modifiers
+    <h1 id="label" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#label" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>label</h1>
+      <pre><code class="scala scalatex-site-Styles-highlightMe">field name: String {
+  label = &quot;Company Name&quot;
+}
+</code></pre>
+      <p>
+        This allows to set a name which will be used on UI. 
+        By default the name of the field will be used for this. 
+        CamelCase will be translated to user-friendly string automatically.
+        So this modifier is required only if you want to show user a different label than the field's name.
+    </p>
+    <h1 id="views" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#views" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>views</h1>
+      <p>
+        update
+        </p>
+    <h1 id="update" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#update" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>update</h1>
+      <p>
+        update
     </p>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Syntax" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Syntax<a class=" scalatex-site-Styles-headerLink" href="#Syntax" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <pre><code class="scala scalatex-site-Styles-highlightMe">&lt;Entity&gt; ::=
@@ -206,16 +222,247 @@ entity &lt;Name&gt; [extends &lt;SuperClass&gt;*] {
   &lt;Field | ComputeField | Function | View&gt;*
 }
 
-Field ::= field &lt;Name&gt;: [&lt;DataType&gt;] [= &lt;DefaultValue&gt;] [{ &lt;Modifier&gt;* }]
+Field ::= field &lt;Name&gt;: [&lt;DataType&gt;] [= &lt;Expression&gt;] [{ &lt;Modifier&gt;* }]
+
+Modifier ::= &lt;ModifierName&gt; {[= &lt;Expression&gt;] | [{ &lt;Expression&gt;* }] }
 </code></pre></div>
 <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="View" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">View<a class=" scalatex-site-Styles-headerLink" href="#View" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div><div class=" scalatex-site-Styles-content">
-  <p>
-      View
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Introduction" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Introduction<a class=" scalatex-site-Styles-headerLink" href="#Introduction" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <p>
+      Entities always contain two view. 
+      <code>list</code> is to display many items and <code>form</code> is to display one item.
+      If these views are not defined in an entity, they will be generated automatically.
+      You can use also different names for your views.
+      </p>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
+  field code: Int
+  field name: String
+  
+  view list = table{code, name}
+}
+</code></pre>
+    <code>
+      | code | name     |
+      -------------------
+      | 1    | Company1 |
+      | 2    | Company2 |
+      </code>
+    <p>
+      To declare a view, you should start it with keyword <code>view</code>. 
+      Then you can use any name for view and after <code>=</code> you can define layout.
+      <table></table> is a type of layout. In braces there sublayouts. 
+      In this case there are two fields <code>code</code> and <code>name</code>. 
+      They will be displayed as table columns.
+      </p>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Invoice {
+  field number: String
+  field data: Date
+  field items: [InvoiceItem]
+  view form = column {
+    net {
+      number
+      date
+    }
+    items =&gt; table(selectable){product, qty}
+  }
+}
+class InvoiceItem {
+  field product: Product
+  field qty: Dec[2]
+}
+</code></pre>
+    <code>
+      number:| numberField  | 
+        date:| dateField    |
       
+      | product  | qty |
+      ------------------
+      | Product1 | 10  |
+      | Product2 | 23  |  
+      
+    </code>
+    <p>
+      This is more complex example. 
+      <code>column</code> puts sublayouts one under another vertically.
+      <code>net</code> create a layout with labels and fields as a form. Every field will have its label before it. 
+      All fields will be alligned.
 </p>
+    <p>
+      <code>items =&gt; </code> means that <code>table</code> will show <code>items</code> with columns <code>product</code> and <code>qty</code>.
+      After layout type in brackets there could be modifiers. 
+      In this example <code>table(selectable)</code>, <code>selectable</code> is a modifier which allows to table to select rows.
+    
+      </p>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="ListView" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">List View<a class=" scalatex-site-Styles-headerLink" href="#ListView" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
+  field code: Int
+  field name: String
+  
+  view list = table{code, name}
+}
+
+
+</code></pre>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="FormView" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Form View<a class=" scalatex-site-Styles-headerLink" href="#FormView" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
+  field code: Int
+  field name: String
+  
+  view form = net {
+    code
+    name
+  }
+}
+</code></pre>
+    <code>
+      code:| codeField | 
+      name:| nameField |
+      </code>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Table" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Table<a class=" scalatex-site-Styles-headerLink" href="#Table" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <p></p> 
+      Table shows field labels in header and then rows for every item. 
+      Usualy it is only used to show many items as a list view or to show collection fields.
+      
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
+  field code: Int
+  field name: String
+  
+  view list = table{code, name}
+}
+</code></pre>
+    <code>
+      | code | name     |
+      -------------------
+      | 1    | Company1 |
+      | 2    | Company2 |
+      </code>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Invoice {
+  field number
+  field items: [InvoiceItem]
+  view form = column {
+    net{number}
+    items =&gt; table{product, qty}
+  }
+}
+class InvoiceItem {
+  field product: Product
+  field qty: Dec[2]
+}
+</code></pre>
+    <code>
+      number:| numberField  | 
+
+      | product  | qty |
+      ------------------
+      | Product1 | 10  |
+      | Product2 | 23  |  
+    </code>
+    <h1 id="Tablemodifiers" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#Tablemodifiers" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>Table modifiers</h1>
+      <dl>
+        <dt>
+          <code>selectable</code></dt>
+        <dd>
+          Allows user to click on the row and highlight it. 
+      </dd></dl>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Net" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Net<a class=" scalatex-site-Styles-headerLink" href="#Net" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
+  field code: Int
+  field name: String
+  field description: String
+  
+  view form = net {
+    row {code, name}
+    description
+  }
+}
+</code></pre>
+    <code>
+             code:| codeField        |  name:| nameField |</code>
+      description:| descriptionField |
+      
+      
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Column" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Column<a class=" scalatex-site-Styles-headerLink" href="#Column" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
+  field code: Int
+  field name: String
+  
+  view form = column {
+    code
+    name
+  }
+}
+</code></pre>
+    <code>
+      | codeField |
+      | nameField |
+       </code>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Row" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Row<a class=" scalatex-site-Styles-headerLink" href="#Row" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
+  field code: Int
+  field name: String
+  
+  view form = row {
+    code
+    name
+  }
+}
+</code></pre>
+    <code>
+      | codeField | nameField |
+      </code>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Field" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Field<a class=" scalatex-site-Styles-headerLink" href="#Field" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <p>
+      Field layout displays fields. 
+      When you use an expression as a layout by default the field layout will be used.
+      This means that you need to use this layout explicitly only if you need to provide some modifiers.
+    </p>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
+  field code: Int
+  field name: String
+  field description: String
+  
+  view form = net {
+    row {code, name}
+    description =&gt; field(span = 2)
+  }
+}
+</code></pre>
+    <code>
+             code:| codeField |  name:| nameField |</code>
+      description:| descriptionField              |
+    
+    
+    <h1 id="Fieldmodifiers" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#Fieldmodifiers" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>Field modifiers</h1>
+      <dl>
+        <dt>
+          <code>span: Int</code></dt>
+        <dd>
+          Allows to expand the field on more than one column in parent layout.
+          Default value is <code>1</code>.
+  
+          </dd></dl>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Universalmodifiers" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Universal modifiers<a class=" scalatex-site-Styles-headerLink" href="#Universalmodifiers" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <p>
+      Some modifiers can be used for all layouts.</p>
+     <dl>
+        <dt>
+          <code>label: String</code></dt>
+        <dd>
+          Set label for layout which will be displayed in the header. 
+          By default, entity name will be used. It will be automatically translated into user-friendly string.
+          For lists, singualar form of entity name will be translated into plural. 
+          It does not work properly for all cases. So if plural for is incorrect, provide the label modifier.
+          
+          <pre><code class="scala scalatex-site-Styles-highlightMe">view list = table(label = &quot;Companies&quot;) {code, name}
+</code></pre></dd></dl>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Syntax" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Syntax<a class=" scalatex-site-Styles-headerLink" href="#Syntax" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">View ::= view &lt;Name&gt; = &lt;Layout&gt;
+
+Layout ::= [&lt;Expression&gt; =&gt; ] [&lt;LayoutType&gt;[(&lt;Modifier&gt;*)] [{ &lt;Layout&gt;* }]]
+</code></pre>
   </div></div><script>
     scalatex.scrollspy.Controller().main(
-      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[]},{"value":"Optional Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Data Types","children":[]},{"value":"Field Modifiers","children":[]},{"value":"Syntax","children":[]}]},{"value":"View","children":[]}]
+      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[]},{"value":"Optional Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Data Types","children":[]},{"value":"Field Modifiers","children":[{"value":"label","children":[]},{"value":"views","children":[]},{"value":"update","children":[]}]},{"value":"Syntax","children":[]}]},{"value":"View","children":[{"value":"Introduction","children":[]},{"value":"List View","children":[]},{"value":"Form View","children":[]},{"value":"Table","children":[{"value":"Table modifiers","children":[]}]},{"value":"Net","children":[]},{"value":"Column","children":[]},{"value":"Row","children":[]},{"value":"Field","children":[{"value":"Field modifiers","children":[]}]},{"value":"Universal modifiers","children":[]},{"value":"Syntax","children":[]}]}]
   )</script><script>
     ['DOMContentLoaded', 'load'].forEach(function(ev){
       addEventListener(ev, function(){
@@ -225,4 +472,4 @@ Field ::= field &lt;Name&gt;: [&lt;DataType&gt;] [= &lt;DefaultValue&gt;] [{ &lt
         );
       })
     })
-  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
