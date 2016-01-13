@@ -246,11 +246,11 @@ Modifier ::= &lt;ModifierName&gt; {[= &lt;Expression&gt;] | [{ &lt;Expression&gt
   view list = table{code, name}
 }
 </code></pre>
-    <div style="background: #f3f3f3;"><pre><code class="asciidoc scalatex-site-Styles-highlightMe">| code | name     |
+    <pre style="background: #f3f3f3;"><code>| code | name     |
 -------------------
 | 1    | Company1 |
 | 2    | Company2 |
-</code></pre></div>
+</code></pre>
     <p>
       To declare a view, you should start it with keyword <code>view</code>. 
       Then you can use any name for view and after <code>=</code> you can define layout.
@@ -275,7 +275,7 @@ class InvoiceItem {
   field qty: Dec[2]
 }
 </code></pre>
-    <div style="background: #f3f3f3;"><pre><code class="asciidoc scalatex-site-Styles-highlightMe">number:| numberField  | 
+    <pre style="background: #f3f3f3;"><code>number:| numberField  | 
   date:| dateField    |
 
 | product  | qty |
@@ -283,7 +283,7 @@ class InvoiceItem {
 | Product1 | 10  |
 | Product2 | 23  |  
 
-</code></pre></div>
+</code></pre>
     <p>
       This is more complex example. 
       <code>column</code> puts sublayouts one under another vertically.
@@ -304,11 +304,11 @@ class InvoiceItem {
   view list = table{code, name}
 }
 </code></pre>
-    <div style="background: #f3f3f3;"><pre><code class="asciidoc scalatex-site-Styles-highlightMe">| code | name     |
+    <pre style="background: #f3f3f3;"><code>| code | name     |
 -------------------
 | 1    | Company1 |
 | 2    | Company2 |
-</code></pre></div>
+</code></pre>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="FormView" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Form View<a class=" scalatex-site-Styles-headerLink" href="#FormView" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
   field code: Int
@@ -320,9 +320,9 @@ class InvoiceItem {
   }
 }
 </code></pre>
-    <div style="background: #f3f3f3;"><pre><code class="asciidoc scalatex-site-Styles-highlightMe">code:| codeField | 
+    <pre style="background: #f3f3f3;"><code>code:| codeField | 
 name:| nameField |
-</code></pre></div>
+</code></pre>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Table" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Table<a class=" scalatex-site-Styles-headerLink" href="#Table" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p></p> 
       Table shows field labels in header and then rows for every item. 
@@ -335,11 +335,11 @@ name:| nameField |
   view list = table{code, name}
 }
 </code></pre>
-    <div style="background: #f3f3f3;"><pre><code class="asciidoc scalatex-site-Styles-highlightMe">| code | name     |
+    <pre style="background: #f3f3f3;"><code>| code | name     |
 -------------------
 | 1    | Company1 |
 | 2    | Company2 |
-</code></pre></div>
+</code></pre>
     <pre><code class="scala scalatex-site-Styles-highlightMe">entity Invoice {
   field number
   field items: [InvoiceItem]
@@ -353,13 +353,13 @@ class InvoiceItem {
   field qty: Dec[2]
 }
 </code></pre>
-    <div style="background: #f3f3f3;"><pre><code class="asciidoc scalatex-site-Styles-highlightMe">number:| numberField  | 
+    <pre style="background: #f3f3f3;"><code>number:| numberField  | 
 
 | product  | qty |
 ------------------
 | Product1 | 10  |
 | Product2 | 23  |  
-</code></pre></div>
+</code></pre>
     <h1 id="Tablemodifiers" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#Tablemodifiers" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>Table modifiers</h1>
       <dl>
         <dt>
@@ -379,7 +379,7 @@ class InvoiceItem {
   }
 }
 </code></pre>
-    <div style="background: #f3f3f3;"><pre><code class="asciidoc scalatex-site-Styles-highlightMe">code:| codeField        |  name:| nameField |</code></pre></div>
+    <pre style="background: #f3f3f3;"><code>code:| codeField        |  name:| nameField |</code></pre>
       description:| descriptionField |
       
       
@@ -394,9 +394,9 @@ class InvoiceItem {
   }
 }
 </code></pre>
-    <div style="background: #f3f3f3;"><pre><code class="asciidoc scalatex-site-Styles-highlightMe">| codeField |
+    <pre style="background: #f3f3f3;"><code>| codeField |
 | nameField |
- </code></pre></div>
+ </code></pre>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Row" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Row<a class=" scalatex-site-Styles-headerLink" href="#Row" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
   field code: Int
@@ -408,8 +408,8 @@ class InvoiceItem {
   }
 }
 </code></pre>
-    <div style="background: #f3f3f3;"><pre><code class="asciidoc scalatex-site-Styles-highlightMe">| codeField | nameField |
-</code></pre></div>
+    <pre style="background: #f3f3f3;"><code>| codeField | nameField |
+</code></pre>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Field" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Field<a class=" scalatex-site-Styles-headerLink" href="#Field" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p>
       Field layout displays fields. 
@@ -427,10 +427,10 @@ class InvoiceItem {
   }
 }
 </code></pre>
-    <div style="background: #f3f3f3;"><pre><code class="asciidoc scalatex-site-Styles-highlightMe">|       code:| codeField |  name:| nameField |
+    <pre style="background: #f3f3f3;"><code>|       code:| codeField |  name:| nameField |
 |description:| descriptionField              |
 
-</code></pre></div>
+</code></pre>
     <h1 id="Fieldmodifiers" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#Fieldmodifiers" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>Field modifiers</h1>
       <dl>
         <dt>
@@ -471,4 +471,4 @@ Layout ::= [&lt;Expression&gt; =&gt; ] [&lt;LayoutType&gt;[(&lt;Modifier&gt;*)] 
         );
       })
     })
-  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
