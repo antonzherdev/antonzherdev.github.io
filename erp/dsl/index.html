@@ -242,7 +242,40 @@ class InvoiceItem {
         <code>update: (T) =&gt; Unit</code></dt>
       <dd>
         TODO:update
-    </dd></dl>
+        </dd></dl>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Inheritance" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Inheritance<a class=" scalatex-site-Styles-headerLink" href="#Inheritance" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">trait HasCode {
+  field code: String
+}
+trait HasName {
+  field name: String
+}
+entity Company extends HasCode with HasName {
+  field description: String
+}
+entity Product extends HasCode
+</code></pre>
+    <p>
+      Traits can be a base for entities and classes. 
+      Entity can inherit multiple traits.
+      All fields declared in the traits will be available in the entity.
+      In this example the <code>Company</code> entity will have three fields <code>code</code>, <code>name</code> and <code>description</code>;
+      <code>Product</code> will have <code>code</code> only.
+      It allows to avoid duplication and reuse the same structure in similar entities.
+  </p>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Extensions" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Extensions<a class=" scalatex-site-Styles-headerLink" href="#Extensions" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
+  field name: String
+}
+extend entity Company {
+  field description: String
+}
+</code></pre>
+    <p>
+      You can add field into existing entity using the <code>extend entity</code> construction.
+      In this example, <code>Company</code> will have the <code>description</code> field as well as <code>name</code>.
+      It allows to add user-specific fields into existing applications.
+    </p>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Syntax" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Syntax<a class=" scalatex-site-Styles-headerLink" href="#Syntax" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <pre><code class="scala scalatex-site-Styles-highlightMe">&lt;Entity&gt; ::=
 entity &lt;Name&gt; [extends &lt;SuperClass&gt;*] {
@@ -483,7 +516,7 @@ Layout ::= [&lt;Expression&gt; =&gt; ] [&lt;LayoutType&gt;[(&lt;Modifier&gt;*)] 
 </code></pre>
   </div></div><script>
     scalatex.scrollspy.Controller().main(
-      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[]},{"value":"Enum Fields","children":[]},{"value":"Optional Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Data Types","children":[]},{"value":"Field Modifiers","children":[]},{"value":"Syntax","children":[]}]},{"value":"View","children":[{"value":"Introduction","children":[]},{"value":"List View","children":[]},{"value":"Form View","children":[]},{"value":"Table","children":[{"value":"Table modifiers","children":[]}]},{"value":"Net","children":[]},{"value":"Column","children":[]},{"value":"Row","children":[]},{"value":"Field","children":[{"value":"Field modifiers","children":[]}]},{"value":"Universal modifiers","children":[]},{"value":"Syntax","children":[]}]}]
+      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[]},{"value":"Enum Fields","children":[]},{"value":"Optional Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Data Types","children":[]},{"value":"Field Modifiers","children":[]},{"value":"Inheritance","children":[]},{"value":"Extensions","children":[]},{"value":"Syntax","children":[]}]},{"value":"View","children":[{"value":"Introduction","children":[]},{"value":"List View","children":[]},{"value":"Form View","children":[]},{"value":"Table","children":[{"value":"Table modifiers","children":[]}]},{"value":"Net","children":[]},{"value":"Column","children":[]},{"value":"Row","children":[]},{"value":"Field","children":[{"value":"Field modifiers","children":[]}]},{"value":"Universal modifiers","children":[]},{"value":"Syntax","children":[]}]}]
   )</script><script>
     ['DOMContentLoaded', 'load'].forEach(function(ev){
       addEventListener(ev, function(){
@@ -493,4 +526,4 @@ Layout ::= [&lt;Expression&gt; =&gt; ] [&lt;LayoutType&gt;[(&lt;Modifier&gt;*)] 
         );
       })
     })
-  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
