@@ -237,69 +237,7 @@ class InvoiceItem {
         <code>update: (T) =&gt; Unit</code></dt>
       <dd>
         TODO:update
-        </dd></dl>
-  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Inheritance" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Inheritance<a class=" scalatex-site-Styles-headerLink" href="#Inheritance" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
-    <pre><code class="scala scalatex-site-Styles-highlightMe">trait HasCode {
-  field code: String
-}
-trait ActionItem {
-  func name: String
-  field priority: Int
-  field status: Status
-}
-
-entity Product extends HasCode {
-  field description: String
-}
-entity Company extends HasCode with ActionItem {
-  field name: String
-}
-
-</code></pre>
-     <p>
-      Traits can be a base for entities and classes. 
-      Entity can inherit multiple traits.
-      All fields declared in the traits will be available in the entity.
-      <code>Product</code> will have <code>code</code> field declared in the <code>HasCode</code> trait. 
-      It declares alse <code>description</code> field. So it will have these two fields.
-      </p>
-    <p>
-      In this example the <code>Company</code> entity will have <code>code</code> field from <code>HasCode</code> trait and <code>priority</code> and <code>status</code> from <code>ActionItem</code>.
-      Field <code>name</code> is declared in the <code>Company</code>. In <code>ActionItem</code> <code>name</code> is declared as <code>func</code>. 
-      This means that the trait itself does not create a field but require form entity to provide either a field, compute field or a function with the same signature. 
-      This is more flexible and allows to use existing fields to calculate value and satisfy the trait's requirenments.
-      </p>
-    <p></p>  
-      It allows to avoid duplication and reuse the same structure in similar entities. 
-      It also allows to define a contract which entities should satisfy when implementing this trait.
-  
-  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Extensions" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Extensions<a class=" scalatex-site-Styles-headerLink" href="#Extensions" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
-    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
-  field name: String
-}
-extend entity Company {
-  field description: String
-}
-</code></pre>
-    <p>
-      You can add field into existing entity using the <code>extend entity</code> construction.
-      In this example, <code>Company</code> will have the <code>description</code> field as well as <code>name</code>.
-      It allows to add user-specific fields into existing applications.
-    </p>
-  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Syntax" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Syntax<a class=" scalatex-site-Styles-headerLink" href="#Syntax" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
-    <pre><code class="scala scalatex-site-Styles-highlightMe">Class ::=
-[extend] {entity | class | trait | enum} &lt;Name&gt; [extends &lt;SuperClass&gt;*] {
-  {&lt;Field&gt; | &lt;ComputeField&gt; | &lt;Function&gt; | &lt;View&gt; | &lt;Case&gt;}*
-}
-
-Field ::= field &lt;Name&gt;: [&lt;DataType&gt;] [= &lt;Expression&gt;] [{ &lt;Modifier&gt;* }]
-ComputeField ::= compute &lt;Name&gt;: [&lt;DataType&gt;] = &lt;Expression&gt; [{ &lt;Modifier&gt;* }]
-Function ::= func &lt;Name&gt;[(&lt;Param&gt;*)]: [&lt;DataType&gt;] = &lt;Expression&gt;
-View ::= view &lt;Name&gt; = &lt;Layout&gt;
-Case ::= case &lt;Name&gt; [{ &lt;Modifier&gt;* }]
-
-Modifier ::= &lt;ModifierName&gt; {[= &lt;Expression&gt;] | [{ &lt;Expression&gt;* }] }
-</code></pre></div>
+      </dd></dl></div>
 <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="View" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">View<a class=" scalatex-site-Styles-headerLink" href="#View" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div><div class=" scalatex-site-Styles-content">
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Introduction" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Introduction<a class=" scalatex-site-Styles-headerLink" href="#Introduction" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p>
@@ -622,8 +560,10 @@ description:
       If you want to make your form so that user will select an item and edit it in a realated form then you can use:
       <ul>
         <li>
-          <code>selectable</code> modifier to make your collection layout selectable
-          <code>readOnly</code> modifier to make your collection layout read only in the edit mode because you will edit data in you form
+          <code>selectable</code> modifier to make your collection layout selectable</li>
+        <li>
+          <code>readOnly</code> modifier to make your collection layout read only in the edit mode because you will edit data in you form</li>
+        <li>
           <code>selected</code> function of your collection field for your form to show selected item in your form
     </li></ul></p>
     <pre><code class="scala scalatex-site-Styles-highlightMe">entity Invoice {
@@ -654,11 +594,6 @@ class InvoiceItem {
 | Product2 |       qty:| 21        |
 |          |
 |          |
-</code></pre>
-  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Syntax" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Syntax<a class=" scalatex-site-Styles-headerLink" href="#Syntax" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
-    <pre><code class="scala scalatex-site-Styles-highlightMe">View ::= view &lt;Name&gt; = &lt;Layout&gt;
-
-Layout ::= [&lt;Expression&gt; =&gt; ] [&lt;LayoutType&gt;[(&lt;Modifier&gt;*)] [{ &lt;Layout&gt;* }]]
 </code></pre></div>
 <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Language" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Language<a class=" scalatex-site-Styles-headerLink" href="#Language" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div><div class=" scalatex-site-Styles-content">
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Operators" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Operators<a class=" scalatex-site-Styles-headerLink" href="#Operators" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
@@ -851,10 +786,146 @@ entity Product {
       <dt><code>ui selected: T?</code></dt>
       <dd>
         Function returns currently selected value on UI or None. 
-        This function can be used only on UI. See also selectable modifier.</dd></dl>
+        This function can be used only on UI. See also selectable modifier.
+  </dd></dl>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Classes" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Classes<a class=" scalatex-site-Styles-headerLink" href="#Classes" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <p>
+      You can declare classes of different types:
+      <dl>
+        <dt>entity</dt>
+        <dd>
+          An entity will be stored in the database directly and will have an id. 
+          You can makes queries on this.</dd>
+        <dt>class</dt>
+        <dd>
+          A universal class that can contain fields, function, etc as well as entity, 
+          but it can be stored in the database only as an embedded entity field or collection field.
+          You cannot select them directly only through its parent entity.</dd>
+        <dt>trait</dt>
+        <dd>
+          Traits contain something common for few entities or classes. 
+          Classes and entities can implement many traits. See Inheritance.
+          You can select all entities which implement the trait.</dd>
+        <dt>enum</dt>
+        <dd>
+          Enum is a datatype which can have only few values. For example statuses. </dd>
+        <dt>access</dt>
+        <dd>
+          Declares an access group.
+          </dd></dl></p>
+    <p></p> 
+      In these classes you can declare:
+      <dl>
+        <dt>field</dt>
+        <dd>
+          Fields are something which will stored in database.</dd>
+        <dt>func</dt>
+        <dd>
+          A function. Function can have parameters and return a value.</dd>
+        <dt>compute</dt>
+        <dd>
+          Compute fields are not storing in the database by default but they are shown to user as a field. </dd>
+        <dt>view</dt>
+        <dd>
+          Declare a form or list view.</dd>
+        <dt>case</dt>
+        <dd>
+          Case for enum.</dd>
+        <dt>entity</dt>
+        <dd>
+          Describe an entity access for access groups.
+          </dd></dl>
+    <p>
+      With declarations you can use some modifiers:
+      <dl>
+        <dt>native</dt>
+        <dd>
+          This means that the function is implemented in native code and here this is only a desription for the function.</dd>
+        <dt>object</dt>
+        <dd>
+          Make this function related to object not to instance. 
+          This means that you cannot use other instance related declaration in this function.
+          But you can use this function without an instance.
+          <pre><code class="scala scalatex-site-Styles-highlightMe">class Foo {
+  field instanceField: Int
+  
+  func instanceFunc: Int =  instanceField
+  
+  object func objectFunc: Int = 22 
+  object func objectFunc2: Int = instanceField //!!!Error. You cannot use instance declarations here
+}
+
+Foo.objectFunc
+Foo.instanceFunc //!!!Error. You cannot call it without an instance
+</code></pre></dd></dl></p>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Inheritance" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Inheritance<a class=" scalatex-site-Styles-headerLink" href="#Inheritance" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">trait HasCode {
+  field code: String
+}
+trait ActionItem {
+  func name: String
+  field priority: Int
+  field status: Status
+}
+
+entity Product extends HasCode {
+  field description: String
+}
+entity Company extends HasCode with ActionItem {
+  field name: String
+}
+
+</code></pre>
+    <p>
+      Traits can be a base for entities and classes. 
+      Entity can inherit multiple traits.
+      All fields declared in the traits will be available in the entity.
+      <code>Product</code> will have <code>code</code> field declared in the <code>HasCode</code> trait. 
+      It declares alse <code>description</code> field. So it will have these two fields.
+      </p>
+    <p>
+      In this example the <code>Company</code> entity will have <code>code</code> field from <code>HasCode</code> trait and <code>priority</code> and <code>status</code> from <code>ActionItem</code>.
+      Field <code>name</code> is declared in the <code>Company</code>. In <code>ActionItem</code> <code>name</code> is declared as <code>func</code>. 
+      This means that the trait itself does not create a field but require form entity to provide either a field, compute field or a function with the same signature. 
+      This is more flexible and allows to use existing fields to calculate value and satisfy the trait's requirenments.
+      </p>
+    <p></p>  
+      It allows to avoid duplication and reuse the same structure in similar entities. 
+      It also allows to define a contract which entities should satisfy when implementing this trait.
+  
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Extensions" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Extensions<a class=" scalatex-site-Styles-headerLink" href="#Extensions" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
+  field name: String
+}
+extend entity Company {
+  field description: String
+}
+</code></pre>
+    <p>
+      You can add field into existing entity or class using the <code>extend entity</code> construction.
+      In this example, <code>Company</code> will have the <code>description</code> field as well as <code>name</code>.
+      It allows to add user-specific fields into existing applications.
+    </p>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Syntax" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Syntax<a class=" scalatex-site-Styles-headerLink" href="#Syntax" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">Class ::=
+[extend] {entity | class | trait | enum} &lt;Name&gt; [extends &lt;SuperClass&gt;*] {
+  {&lt;Field&gt; | &lt;ComputeField&gt; | &lt;Function&gt; | &lt;View&gt; | &lt;Case&gt;}*
+}
+
+Field ::= field &lt;Name&gt;: [&lt;DataType&gt;] [= &lt;Expression&gt;] [{ &lt;Modifier&gt;* }]
+ComputeField ::= compute &lt;Name&gt;: [&lt;DataType&gt;] = &lt;Expression&gt; [{ &lt;Modifier&gt;* }]
+Function ::= func &lt;Name&gt;[(&lt;Param&gt;*)]: [&lt;DataType&gt;] = &lt;Expression&gt;
+View ::= view &lt;Name&gt; = &lt;Layout&gt;
+Case ::= case &lt;Name&gt; [{ &lt;Modifier&gt;* }]
+
+Modifier ::= &lt;ModifierName&gt; {[= &lt;Expression&gt;] | [{ &lt;Expression&gt;* }] }
+
+View ::= view &lt;Name&gt; = &lt;Layout&gt;
+
+Layout ::= [&lt;Expression&gt; =&gt; ] [&lt;LayoutType&gt;[(&lt;Modifier&gt;*)] [{ &lt;Layout&gt;* }]]</code></pre>
   </div></div><script>
     scalatex.scrollspy.Controller().main(
-      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[]},{"value":"Enum Fields","children":[]},{"value":"Optional Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Field Modifiers","children":[]},{"value":"Inheritance","children":[]},{"value":"Extensions","children":[]},{"value":"Syntax","children":[]}]},{"value":"View","children":[{"value":"Introduction","children":[]},{"value":"List View","children":[]},{"value":"Form View","children":[]},{"value":"Table","children":[]},{"value":"Net","children":[]},{"value":"Column","children":[]},{"value":"Row","children":[]},{"value":"Field","children":[]},{"value":"Label","children":[]},{"value":"Button","children":[]},{"value":"Universal modifiers","children":[]},{"value":"Use cases","children":[]},{"value":"Syntax","children":[]}]},{"value":"Language","children":[{"value":"Operators","children":[]},{"value":"Data Types","children":[]}]}]
+      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[]},{"value":"Enum Fields","children":[]},{"value":"Optional Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Field Modifiers","children":[]}]},{"value":"View","children":[{"value":"Introduction","children":[]},{"value":"List View","children":[]},{"value":"Form View","children":[]},{"value":"Table","children":[]},{"value":"Net","children":[]},{"value":"Column","children":[]},{"value":"Row","children":[]},{"value":"Field","children":[]},{"value":"Label","children":[]},{"value":"Button","children":[]},{"value":"Universal modifiers","children":[]},{"value":"Use cases","children":[]}]},{"value":"Language","children":[{"value":"Operators","children":[]},{"value":"Data Types","children":[]},{"value":"Classes","children":[]},{"value":"Inheritance","children":[]},{"value":"Extensions","children":[]},{"value":"Syntax","children":[]}]}]
   )</script><script>
     ['DOMContentLoaded', 'load'].forEach(function(ev){
       addEventListener(ev, function(){
@@ -864,4 +935,4 @@ entity Product {
         );
       })
     })
-  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
