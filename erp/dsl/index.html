@@ -450,13 +450,6 @@ class InvoiceItem {
 | Product1 | 10  |
 | Product2 | 23  |  
 </code></pre>
-    <h3>Table modifiers</h3>
-    <dl>
-      <dt>
-        <code>selectable</code></dt>
-      <dd>
-        Allows user to click on the row and highlight it. 
-      </dd></dl>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Net" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Net<a class=" scalatex-site-Styles-headerLink" href="#Net" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
   field code: Int
@@ -472,31 +465,31 @@ class InvoiceItem {
     <pre style="background: #f3f3f3;padding: 10px;"><code>code:| codeField        |  name:| nameField |</code></pre>
       description:| descriptionField |
       
-    <h3>Modifiers
-      <dl>
-        <dt>labelsAlignment: DslLayoutLabelAlignment</dt>
-        <dd>
-          How to render locate labels for fields:
-          <dl>
-            <dt>Right</dt>
-            <dd>
-              Default value. Labels are closer to fields:
-              <pre style="background: #f3f3f3;padding: 10px;"><code>code:| codeField        |  name:| nameField |</code></pre>
-                description:| descriptionField |</dd>
-            <dt>Left</dt>
-            <dd>
-              Labels are aligned by left, far away from field. 
-              It can work good if you have many optional fields.
-              <pre style="background: #f3f3f3;padding: 10px;"><code>code:       | codeField        |  name:| nameField |
+    <h3>Modifiers</h3>
+    <dl>
+      <dt>labelsAlignment: DslLayoutLabelAlignment</dt>
+      <dd>
+        How to render locate labels for fields:
+        <dl>
+          <dt>Right</dt>
+          <dd>
+            Default value. Labels are closer to fields:
+            <pre style="background: #f3f3f3;padding: 10px;"><code>code:| codeField        |  name:| nameField |</code></pre>
+              description:| descriptionField |</dd>
+          <dt>Left</dt>
+          <dd>
+            Labels are aligned by left, far away from field. 
+            It can work good if you have many optional fields.
+            <pre style="background: #f3f3f3;padding: 10px;"><code>code:       | codeField        |  name:| nameField |
 description:| descriptionField |</code></pre></dd>
-            <dt>Top</dt>
-            <dd>
-              Labels are upon the fields. This works very well if you have long label
-              <pre style="background: #f3f3f3;padding: 10px;"><code>code:                  name:
+          <dt>Top</dt>
+          <dd>
+            Labels are upon the fields. This works very well if you have long label
+            <pre style="background: #f3f3f3;padding: 10px;"><code>code:                  name:
 | codeField            | nameField |
 description:
 | descriptionField                 |
-</code></pre></dd></dl></dd></dl></h3>
+</code></pre></dd></dl></dd></dl>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Column" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Column<a class=" scalatex-site-Styles-headerLink" href="#Column" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
   field code: Int
@@ -600,26 +593,68 @@ description:
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Universalmodifiers" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Universal modifiers<a class=" scalatex-site-Styles-headerLink" href="#Universalmodifiers" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p>
       Some modifiers can be used for all layouts.</p>
-     <dl>
-        <dt>
-          <code>label: String</code></dt>
+    <dl>
+      <dt>
+        <code>label: String</code></dt>
+      <dd>
+        Set label for layout which will be displayed in the header. 
+        By default, entity name will be used. It will be automatically translated into user-friendly string.
+        For lists, singular form of entity name will be translated into plural.
+        It does not work properly for all cases. So if plural for is incorrect, provide the label modifier.
+        
+        <pre><code class="scala scalatex-site-Styles-highlightMe">view list = table(label = &quot;Companies&quot;) {code, name}</code></pre></dd>
+      <dt>
+        <code>span: Int</code>
         <dd>
-          Set label for layout which will be displayed in the header. 
-          By default, entity name will be used. It will be automatically translated into user-friendly string.
-          For lists, singular form of entity name will be translated into plural.
-          It does not work properly for all cases. So if plural for is incorrect, provide the label modifier.
-          
-          <pre><code class="scala scalatex-site-Styles-highlightMe">view list = table(label = &quot;Companies&quot;) {code, name}</code></pre></dd>
-        <dt>
-          <code>span: Int</code>
-          <dd>
-            Allows to expand the field on more than one column in parent layout.
-            Default value is <code>1</code>.</dd></dt>
-        <dt>
-          <code>readOnly: Bool</code>
-          <dd>
-            This does not allow to edit field in the edit mode and keep it always read only.
-</dd></dt></dl>
+          Allows to expand the field on more than one column in parent layout.
+          Default value is <code>1</code>.</dd></dt>
+      <dt>
+        <code>readOnly: Bool</code>
+        <dd>
+          This does not allow to edit field in the edit mode and keep it always read only.</dd></dt>
+      <dt><code>selectable: Bool</code></dt>
+      <dd>
+        Allows user to click on the row of your collection layout and highlight it. 
+        </dd></dl>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Usecases" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Use cases<a class=" scalatex-site-Styles-headerLink" href="#Usecases" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <h3>Selectable table and related view</h3>
+    <p>
+      If you want to make your form so that user will select an item and edit it in a realated form then you can use:
+      <ul>
+        <li>
+          <code>selectable</code> modifier to make your collection layout selectable
+          <code>readOnly</code> modifier to make your collection layout read only in the edit mode because you will edit data in you form
+          <code>selected</code> function of your collection field for your form to show selected item in your form
+    </li></ul></p>
+    <pre><code class="scala scalatex-site-Styles-highlightMe">entity Invoice {
+  field number: String
+  field data: Date
+  field items: [InvoiceItem]
+  view form = column {
+    net {number, date}
+    row {
+      items =&gt; column(selectable, readOnly){product}
+      items.selected =&gt; net {
+        product
+        qty
+      }
+    }
+    
+  }
+}
+class InvoiceItem {
+  field product: Product
+  field qty: Dec[2]
+}
+</code></pre>
+    <pre style="background: #f3f3f3;padding: 10px;"><code>number:| numberField  | 
+  date:| dateField    |
+
+| Product1 |   product:| Product1  | 
+| Product2 |       qty:| 21        |
+|          |
+|          |
+</code></pre>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Syntax" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Syntax<a class=" scalatex-site-Styles-headerLink" href="#Syntax" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <pre><code class="scala scalatex-site-Styles-highlightMe">View ::= view &lt;Name&gt; = &lt;Layout&gt;
 
@@ -819,7 +854,7 @@ entity Product {
         This function can be used only on UI. See also selectable modifier.</dd></dl>
   </div></div><script>
     scalatex.scrollspy.Controller().main(
-      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[]},{"value":"Enum Fields","children":[]},{"value":"Optional Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Field Modifiers","children":[]},{"value":"Inheritance","children":[]},{"value":"Extensions","children":[]},{"value":"Syntax","children":[]}]},{"value":"View","children":[{"value":"Introduction","children":[]},{"value":"List View","children":[]},{"value":"Form View","children":[]},{"value":"Table","children":[]},{"value":"Net","children":[]},{"value":"Column","children":[]},{"value":"Row","children":[]},{"value":"Field","children":[]},{"value":"Label","children":[]},{"value":"Button","children":[]},{"value":"Universal modifiers","children":[]},{"value":"Syntax","children":[]}]},{"value":"Language","children":[{"value":"Operators","children":[]},{"value":"Data Types","children":[]}]}]
+      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[]},{"value":"Enum Fields","children":[]},{"value":"Optional Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Field Modifiers","children":[]},{"value":"Inheritance","children":[]},{"value":"Extensions","children":[]},{"value":"Syntax","children":[]}]},{"value":"View","children":[{"value":"Introduction","children":[]},{"value":"List View","children":[]},{"value":"Form View","children":[]},{"value":"Table","children":[]},{"value":"Net","children":[]},{"value":"Column","children":[]},{"value":"Row","children":[]},{"value":"Field","children":[]},{"value":"Label","children":[]},{"value":"Button","children":[]},{"value":"Universal modifiers","children":[]},{"value":"Use cases","children":[]},{"value":"Syntax","children":[]}]},{"value":"Language","children":[{"value":"Operators","children":[]},{"value":"Data Types","children":[]}]}]
   )</script><script>
     ['DOMContentLoaded', 'load'].forEach(function(ev){
       addEventListener(ev, function(){
@@ -829,4 +864,4 @@ entity Product {
         );
       })
     })
-  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
