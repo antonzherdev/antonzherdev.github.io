@@ -181,6 +181,18 @@ entity Transaction {
     label = &quot;We Sale&quot;
   }
 }
+</code></pre>
+    <p></p> 
+      If you put your enum type in square brackets, user will be able to choose few options together.
+      
+    <pre><code class="scala scalatex-site-Styles-highlightMe">enum Tag {
+  case Tag1
+  case Tag2
+  case Tag3
+} 
+entity Company {
+  field tags: [Tag]
+}
 
 </code></pre>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="OptionalFields" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Optional Fields<a class=" scalatex-site-Styles-headerLink" href="#OptionalFields" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
@@ -533,13 +545,58 @@ description:
     <p>
       In braces there is an action script which will be executed when user presses the button.
       In this example, we set <code>code</code> field to <code>1</code> and <code>name</code> to <code>&quot;Test&quot;</code>.
-          </p>
+  </p>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Styles" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Styles<a class=" scalatex-site-Styles-headerLink" href="#Styles" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <p>
+      There two ways how to set colors, fonts and other styles to your component:
+      <ul>
+        <li><code>css</code> modifier</li>
+        <li><code>style</code> declaration and modifier</li>
+      </ul></p>
+    <p>
+      Both ways will use CSS. You can use <a href="http://www.w3schools.com/cssref/default.asp">the CSS reference</a> to find out what options are available.
+    </p>
+    <h3>css modifier</h3>
+    <p>
+      Add CSS inline style to the component. 
+      <pre><code class="scala scalatex-site-Styles-highlightMe">view list = net {
+  code
+  name =&gt; field(css = &quot;background: red; color: white&quot;)
+}</code></pre></p>
+    <h3>style declaration and modifier
+      <p>
+        Reference to style if you want to use a common style form few components.</p>
+      <pre><code class="scala scalatex-site-Styles-highlightMe">entity Company {
+  field code: String
+  field name: String
+  view list = net {
+    code =&gt; field(style = fieldStyle)
+    name =&gt; field(style = fieldStyle)
+  }
+  style fieldStyle {
+    &quot;background: red;
+     color: white&quot;
+  }
+}</code></pre>
+      <p>
+        Here the <code>fieldStyle</code> style is declared. 
+        It is available also outside the entity by <code>Companies.fieldStyle</code> and can be declared in any places.
+        For example there could be a class <code>Styles</code> which contains all styles. 
+        It is a good practice if you use the same styles in different entities.
+      </p>
+      <p>&quot;You can use selectors using &amp; literal to refer the style name.&quot;
+       </p>
+      <pre><code class="scala scalatex-site-Styles-highlightMe">style fieldStyle {
+  &quot;&amp; &gt; .field {
+    color: red;
+  }&quot;
+}
+</code></pre></h3>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Universalmodifiers" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Universal modifiers<a class=" scalatex-site-Styles-headerLink" href="#Universalmodifiers" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p>
       Some modifiers can be used for all layouts.</p>
     <dl>
-      <dt>
-        <code>label: String</code></dt>
+      <dt><code>label: String</code></dt>
       <dd>
         Set label for layout which will be displayed in the header. 
         By default, entity name will be used. It will be automatically translated into user-friendly string.
@@ -547,15 +604,21 @@ description:
         It does not work properly for all cases. So if plural for is incorrect, provide the label modifier.
         
         <pre><code class="scala scalatex-site-Styles-highlightMe">view list = table(label = &quot;Companies&quot;) {code, name}</code></pre></dd>
-      <dt>
-        <code>span: Int</code>
-        <dd>
-          Allows to expand the field on more than one column in parent layout.
-          Default value is <code>1</code>.</dd></dt>
-      <dt>
-        <code>readOnly: Bool</code>
-        <dd>
-          This does not allow to edit field in the edit mode and keep it always read only.</dd></dt>
+      <dt><code>css: String</code></dt>
+      <dd>
+        Add CSS inline style to the component. 
+        </dd>
+      <dt><code>style: Style</code></dt>
+      <dd>
+        Reference to style if you want to use a common style form few components.
+          </dd>
+      <dt><code>span: Int</code></dt>
+      <dd>
+        Allows to expand the field on more than one column in parent layout.
+        Default value is <code>1</code>.</dd>
+      <dt><code>readOnly: Bool</code></dt>
+      <dd>
+        This does not allow to edit field in the edit mode and keep it always read only.</dd>
       <dt><code>selectable: Bool</code></dt>
       <dd>
         Allows user to click on the row of your collection layout and highlight it. 
@@ -833,13 +896,16 @@ entity Product {
           Compute fields are not storing in the database by default but they are shown to user as a field. </dd>
         <dt>view</dt>
         <dd>
-          Declare a form or list view.</dd>
+          Declare a form or list view. Object related.</dd>
         <dt>case</dt>
         <dd>
-          Case for enum.</dd>
+          Case for enum. Object related.</dd>
+        <dt>case</dt>
+        <dd>
+          Declare a style. Object related.</dd>
         <dt>entity</dt>
         <dd>
-          Describe an entity access for access groups.
+          Describe an entity access for access groups. Object related.
           </dd></dl>
     <p>
       With declarations you can use some modifiers:
@@ -931,7 +997,7 @@ View ::= view &lt;Name&gt; = &lt;Layout&gt;
 Layout ::= [&lt;Expression&gt; =&gt; ] [&lt;LayoutType&gt;[(&lt;Modifier&gt;*)] [{ &lt;Layout&gt;* }]]</code></pre>
   </div></div><script>
     scalatex.scrollspy.Controller().main(
-      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[]},{"value":"Enum Fields","children":[]},{"value":"Optional Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Field Modifiers","children":[]}]},{"value":"View","children":[{"value":"Introduction","children":[]},{"value":"List View","children":[]},{"value":"Form View","children":[]},{"value":"Table","children":[]},{"value":"Net","children":[]},{"value":"Column","children":[]},{"value":"Row","children":[]},{"value":"Field","children":[]},{"value":"Label","children":[]},{"value":"Button","children":[]},{"value":"Universal modifiers","children":[]},{"value":"Use cases","children":[]}]},{"value":"Language","children":[{"value":"Operators","children":[]},{"value":"Data Types","children":[]},{"value":"Classes","children":[]},{"value":"Inheritance","children":[]},{"value":"Extensions","children":[]},{"value":"Syntax","children":[]}]}]
+      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[]},{"value":"Enum Fields","children":[]},{"value":"Optional Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Field Modifiers","children":[]}]},{"value":"View","children":[{"value":"Introduction","children":[]},{"value":"List View","children":[]},{"value":"Form View","children":[]},{"value":"Table","children":[]},{"value":"Net","children":[]},{"value":"Column","children":[]},{"value":"Row","children":[]},{"value":"Field","children":[]},{"value":"Label","children":[]},{"value":"Button","children":[]},{"value":"Styles","children":[]},{"value":"Universal modifiers","children":[]},{"value":"Use cases","children":[]}]},{"value":"Language","children":[{"value":"Operators","children":[]},{"value":"Data Types","children":[]},{"value":"Classes","children":[]},{"value":"Inheritance","children":[]},{"value":"Extensions","children":[]},{"value":"Syntax","children":[]}]}]
   )</script><script>
     ['DOMContentLoaded', 'load'].forEach(function(ev){
       addEventListener(ev, function(){
@@ -941,4 +1007,4 @@ Layout ::= [&lt;Expression&gt; =&gt; ] [&lt;LayoutType&gt;[(&lt;Modifier&gt;*)] 
         );
       })
     })
-  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
