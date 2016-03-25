@@ -211,7 +211,7 @@ entity Invoice {
     <h1 id="Bidirectionalreferences" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#Bidirectionalreferences" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>Bidirectional references</h1>
       <p>
         When you have reference in one directions, sometimes you would like to easily find items which refer this item.
-        To achive this you have to declare a backward reference field and using the <code>by</code> modifier link two reference fields together.
+        To achieve this you have to declare a backward reference field and using the <code>by</code> modifier link two reference fields together.
         Then the system will keep them in sync.
       </p>
       <pre><code class="scala scalatex-site-Styles-highlightMe">entity Invoice {
@@ -231,7 +231,7 @@ entity Company {
         <dd>
           Link two reference field together so that the system will keep them in sync. 
     </dd></dl>
-    <h1 id="Refencefieldmode" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#Refencefieldmode" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>Refence field mode</h1>
+    <h1 id="Referencefieldmode" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#Referencefieldmode" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>Reference field mode</h1>
       <p>
         References can work in three modes:</p>
       <dl>
@@ -240,7 +240,7 @@ entity Company {
           This is a default mode and it means that user can select a reference.</dd>
         <dt>read</dt>
         <dd>
-          This creates a read only refence field. A usual use case is backward reference like in the example:
+          This creates a read only reference field. A usual use case is backward reference like in the example:
           <pre><code class="scala scalatex-site-Styles-highlightMe">entity Invoice {
   field client: Company
 }
@@ -442,7 +442,7 @@ field bar: String {
     <p>
       By default there is Admin access group declared. This means that the user will have full access to everything.
       In a workspace there must be at least one user with Admin permissions.
-      If you want to give only limitted permissions to the user you should create an access group and assign it to the user.
+      If you want to give only limited permissions to the user you should create an access group and assign it to the user.
       If user do not have access groups, he will have no permissions.
       </p>
     <pre><code class="scala scalatex-site-Styles-highlightMe">access Accountant {
@@ -605,11 +605,13 @@ name:| nameField |
 </code></pre>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Menu" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Menu<a class=" scalatex-site-Styles-headerLink" href="#Menu" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <p>
-      To add your entity in the menu, you need to declare a menu.
+      To add an entity, trait or report in the menu, you need to declare a menu.
       </p>
     <pre><code class="scala scalatex-site-Styles-highlightMe">menu MainMenu {
   entity Invoice 
-  entity Company 
+  entity Company
+  trait ActionItem
+  report InvoiceReport
 }
 </code></pre>
     <p>
@@ -978,7 +980,7 @@ description:
     </li></ul></p>
     <pre><code class="scala scalatex-site-Styles-highlightMe">entity Invoice {
   field number: String
-  field data: Date
+  field date: Date
   field items: [InvoiceItem] inline
   
   view form = column {
@@ -1008,6 +1010,50 @@ entity InvoiceItem {
 |          |
 |          |
 </code></pre></div>
+<div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Reports" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Reports<a class=" scalatex-site-Styles-headerLink" href="#Reports" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div><div class=" scalatex-site-Styles-content">
+  <p>
+    Reports can show data by query. You have to provide a query for the report and you can provide a list view.
+    List view can be auto-generated. The simplest report will look like this:
+</p>
+  <pre><code class="scala scalatex-site-Styles-highlightMe">entity Invoice {
+  field number: String
+  field data: Date
+  field total: Dec[2]
+}
+report InvoiceReport {
+  query = Invoice.all
+}
+</code></pre>
+  <p>
+    Here the <code>Invoice</code> entity is declared for example.
+    In <code>InvoiceReport</code> <code>query</code> is defined to select all invoices.
+    You can declare a list view in the report the same way as with entity.
+</p>
+  <pre><code class="scala scalatex-site-Styles-highlightMe">report InvoiceReport {
+  query = Invoice.all
+  view list = table{number, date, total}
+}
+</code></pre>
+  <p>
+    You can add the report to a menu.
+</p>
+  <pre><code class="scala scalatex-site-Styles-highlightMe">menu ReportMenu {
+  report InvoiceReport
+}
+</code></pre>
+  <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Queries" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Queries<a class=" scalatex-site-Styles-headerLink" href="#Queries" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+    <h1 id="all" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#all" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>all</h1>
+      <p>
+        To select all items for entity. Usually a query will be started from all items for an entity.
+</p>
+      <pre><code class="scala scalatex-site-Styles-highlightMe">query = Invoice.all
+</code></pre>
+    <h1 id="filter" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#filter" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>filter</h1>
+      <pre><code class="scala scalatex-site-Styles-highlightMe">query = Invoice.all.filter{total &gt; 100}
+</code></pre>
+      <p>
+        Filter invoices with total more than 100.
+</p></div>
 <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Language" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Language<a class=" scalatex-site-Styles-headerLink" href="#Language" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div><div class=" scalatex-site-Styles-content">
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="Operators" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">Operators<a class=" scalatex-site-Styles-headerLink" href="#Operators" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
     <dl>
@@ -1244,7 +1290,7 @@ if (false) 1 else 2 == 2
       </p>
     <h3>this</h3>
     <p>
-      Returns a refence to this class or you can get a reference to a parent class for inner classes</p>
+      Returns a reference to this class or you can get a reference to a parent class for inner classes</p>
     <pre><code class="scala scalatex-site-Styles-highlightMe">entity Invoice {
   class Item {
     func invoice: Invoice = this[Invoice]
@@ -1274,7 +1320,10 @@ if (false) 1 else 2 == 2
         <dt>interface</dt>
         <dd>
           Interface are similar to traits but it can be implemented by classes as well as entities
-          and you cannot select data for interface. </dd>
+          and you cannot select data for interface.</dd>
+        <dt>report</dt>
+        <dd>
+          Declares report.</dd>
         <dt>enum</dt>
         <dd>
           Enum is a datatype which can have only few values. For example statuses. </dd>
@@ -1311,7 +1360,10 @@ if (false) 1 else 2 == 2
           Declare a style. Object related.</dd>
         <dt>entity</dt>
         <dd>
-          Describe an entity access for access groups or entity reference in menu. Object related.
+          Describe an entity access for access groups or entity reference in menu. Object related.</dd>
+        <dt>query</dt>
+        <dd>
+          Defines a query.
           </dd></dl>
     <p>
       With declarations you can use some modifiers:
@@ -1406,7 +1458,7 @@ View ::= view &lt;Name&gt; = &lt;Layout&gt;
 Layout ::= [&lt;Expression&gt; =&gt; ] [&lt;LayoutType&gt;[(&lt;Modifier&gt;*)] [{ &lt;Layout&gt;* }]]</code></pre>
   </div></div><script>
     scalatex.scrollspy.Controller().main(
-      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[{"value":"Bidirectional references","children":[]},{"value":"Refence field mode","children":[]}]},{"value":"Enum Fields","children":[]},{"value":"Optional Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Field Modifiers","children":[]},{"value":"Access","children":[]}]},{"value":"View","children":[{"value":"Introduction","children":[]},{"value":"List View","children":[]},{"value":"Form View","children":[]},{"value":"Menu","children":[]},{"value":"Table","children":[]},{"value":"List","children":[]},{"value":"Net","children":[]},{"value":"Column","children":[]},{"value":"Row","children":[]},{"value":"Field","children":[]},{"value":"Label","children":[]},{"value":"Button","children":[]},{"value":"Styles","children":[]},{"value":"Universal modifiers","children":[]},{"value":"Use cases","children":[]}]},{"value":"Language","children":[{"value":"Operators","children":[]},{"value":"Data Types","children":[]},{"value":"Expressions","children":[]},{"value":"Classes","children":[]},{"value":"Inheritance","children":[]},{"value":"Extensions","children":[]},{"value":"Syntax","children":[]}]}]
+      [{"value":"Entity","children":[{"value":"Fields","children":[]},{"value":"Compute Fields","children":[]},{"value":"Reference Fields","children":[{"value":"Bidirectional references","children":[]},{"value":"Reference field mode","children":[]}]},{"value":"Enum Fields","children":[]},{"value":"Optional Fields","children":[]},{"value":"Collection Fields","children":[]},{"value":"Functions","children":[]},{"value":"Field Modifiers","children":[]},{"value":"Access","children":[]}]},{"value":"View","children":[{"value":"Introduction","children":[]},{"value":"List View","children":[]},{"value":"Form View","children":[]},{"value":"Menu","children":[]},{"value":"Table","children":[]},{"value":"List","children":[]},{"value":"Net","children":[]},{"value":"Column","children":[]},{"value":"Row","children":[]},{"value":"Field","children":[]},{"value":"Label","children":[]},{"value":"Button","children":[]},{"value":"Styles","children":[]},{"value":"Universal modifiers","children":[]},{"value":"Use cases","children":[]}]},{"value":"Reports","children":[{"value":"Queries","children":[{"value":"all","children":[]},{"value":"filter","children":[]}]}]},{"value":"Language","children":[{"value":"Operators","children":[]},{"value":"Data Types","children":[]},{"value":"Expressions","children":[]},{"value":"Classes","children":[]},{"value":"Inheritance","children":[]},{"value":"Extensions","children":[]},{"value":"Syntax","children":[]}]}]
   )</script><script>
     ['DOMContentLoaded', 'load'].forEach(function(ev){
       addEventListener(ev, function(){
@@ -1416,4 +1468,4 @@ Layout ::= [&lt;Expression&gt; =&gt; ] [&lt;LayoutType&gt;[(&lt;Modifier&gt;*)] 
         );
       })
     })
-  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+  </script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
